@@ -4,24 +4,24 @@
             title: "FDA Mock Submission",
             icon: "📄",
             stamp: "APPROVED",
-            details: "Document icon with an 'Approved' stamp motif.",
+            details: "",
         },
         {
             title: "Dental Implant Design",
             icon: "🦷",
-            details: "Sketch-style icon showing cost-effective design matrix.",
+            details: "",
         },
         {
             title: "Arduino Pill Dispenser",
             icon: "⚙️",
             sticker: "TECH",
-            details: "Image of a circuit board/Arduino with a 'Tech' sticker.",
+            details: "",
         },
         {
             title: "Lab Skills",
             type: "polaroid",
             skills: ["DNA Quantitation", "Cell Culture"],
-            details: "A 'Polaroid' grouping showing lab work.",
+            details: "",
         },
     ];
 </script>
