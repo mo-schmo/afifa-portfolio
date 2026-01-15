@@ -4,6 +4,7 @@
     import Experience from "$lib/components/Experience.svelte";
     import Projects from "$lib/components/Projects.svelte";
     import Skills from "$lib/components/Skills.svelte";
+    import Contact from "$lib/components/Contact.svelte";
 </script>
 
 <svelte:head>
@@ -18,11 +19,14 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Hero />
 
-        <div class="space-y-32">
+        <div
+            class="space-y-32 my-20 p-8 md:p-12 bg-white lace-border shadow-sm"
+        >
             <Education />
             <Experience />
             <Projects />
             <Skills />
+            <Contact />
         </div>
 
         <footer class="mt-32 text-center py-12 border-t border-soft-charcoal/5">
