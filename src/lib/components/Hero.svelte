@@ -1,13 +1,20 @@
 <script lang="ts">
     import profileImg from "$lib/assets/profile.png";
+    import ResumeViewer from "./ResumeViewer.svelte";
+
     export let name = "Afifa Nusrat";
     export let title = "Biomedical Engineering Graduate & R&D Specialist";
     export let tagline = "Bridging Clinical Affairs with Engineering Design";
+
+    let showResume = false;
 </script>
+
+<ResumeViewer isOpen={showResume} onClose={() => (showResume = false)} />
 
 <section
     class="min-h-[80vh] flex flex-col items-center justify-center text-center p-8"
 >
+    <!-- ... existing layout ... -->
     <div class="relative mb-8">
         <!-- Profile Photo Frame -->
         <div
@@ -42,7 +49,8 @@
     </p>
 
     <button
-        class="bg-romance-red text-white font-montserrat font-bold py-3 px-8 rounded-sm shadow-lg hover:bg-romance-red/90 transition-all transform hover:scale-105 active:scale-95 relative overflow-hidden group"
+        onclick={() => (showResume = true)}
+        class="bg-romance-red text-white font-montserrat font-bold py-3 px-8 rounded-sm shadow-lg hover:bg-romance-red/90 transition-all transform hover:scale-105 active:scale-95 relative overflow-hidden group cursor-pointer"
     >
         <span class="relative z-10 uppercase tracking-widest">View Resume</span>
         <!-- Ticket notch effect -->
