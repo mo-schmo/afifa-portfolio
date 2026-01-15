@@ -1,4 +1,7 @@
-<script>
+<script lang="ts">
+    import { fly } from "svelte/transition";
+    import { onMount } from "svelte";
+
     // Poses for left and right columns
     const poses = [
         "/images/pose_01.png",
@@ -22,8 +25,14 @@
     const leftPoses = poses.filter((_, i) => i % 2 === 0);
     const rightPoses = poses.filter((_, i) => i % 2 !== 0);
 
+    let visible = false;
+
+    onMount(() => {
+        visible = true;
+    });
+
     // Pseudo-random generation for stable rendering
-    function getRandomStyles(index, side) {
+    function getRandomStyles(index: number, side: string) {
         const seed = index * 9301 + 49297;
         const rnd = (seed % 233280) / 233280;
 
@@ -64,3 +73,17 @@
         {/each}
     </div>
 </div>
+
+<!-- Mobile Peek-a-boo Pose -->
+{#if visible}
+    <div
+        class="fixed bottom-0 right-4 z-40 lg:hidden pointer-events-none"
+        transition:fly={{ y: 200, duration: 1200 }}
+    >
+        <img
+            src={poses[Math.floor(Math.random() * poses.length)]}
+            alt="Decorative Pose"
+            class="w-32 object-contain drop-shadow-xl transform translate-y-4 hover:translate-y-0 transition-transform duration-500 ease-out"
+        />
+    </div>
+{/if}
