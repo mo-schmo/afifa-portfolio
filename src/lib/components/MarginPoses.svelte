@@ -21,10 +21,24 @@
     // Distribute poses: even indices left, odd indices right
     const leftPoses = poses.filter((_, i) => i % 2 === 0);
     const rightPoses = poses.filter((_, i) => i % 2 !== 0);
+
+    // Pseudo-random generation for stable rendering
+    function getRandomStyles(index, side) {
+        const seed = index * 9301 + 49297;
+        const rnd = (seed % 233280) / 233280;
+
+        // Rotation between -15 and 15 degrees
+        const rotation = Math.floor(rnd * 30) - 15;
+
+        // Horizontal offset between -30px and 30px
+        const xOffset = Math.floor(rnd * 60) - 30;
+
+        return `transform: translateX(${xOffset}px) rotate(${rotation}deg);`;
+    }
 </script>
 
 <div
-    class="pointer-events-none absolute inset-0 z-0 hidden w-full justify-between overflow-hidden px-2 lg:flex 2xl:px-8"
+    class="pointer-events-none absolute inset-0 z-0 hidden w-full justify-between overflow-hidden px-10 lg:flex 2xl:px-32"
 >
     <!-- Left Column -->
     <div class="flex h-full flex-col justify-around gap-20 py-10 opacity-80">
@@ -32,10 +46,8 @@
             <img
                 src={pose}
                 alt="Decorative Pose"
-                class="w-24 object-contain transition-transform hover:scale-105 xl:w-32"
-                style="transform: translateX({i % 2 === 0
-                    ? '-10px'
-                    : '20px'}) rotate({i % 2 === 0 ? '-5deg' : '5deg'});"
+                class="w-24 object-contain transition-transform hover:scale-105 xl:w-36"
+                style={getRandomStyles(i, "left")}
             />
         {/each}
     </div>
@@ -46,10 +58,8 @@
             <img
                 src={pose}
                 alt="Decorative Pose"
-                class="w-24 object-contain transition-transform hover:scale-105 xl:w-32"
-                style="transform: translateX({i % 2 === 0
-                    ? '10px'
-                    : '-20px'}) rotate({i % 2 === 0 ? '5deg' : '-5deg'});"
+                class="w-24 object-contain transition-transform hover:scale-105 xl:w-36"
+                style={getRandomStyles(i + 100, "right")}
             />
         {/each}
     </div>
