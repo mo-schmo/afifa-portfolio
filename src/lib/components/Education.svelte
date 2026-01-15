@@ -1,10 +1,10 @@
 <script lang="ts">
     const coursework = [
-        "FDA Regulation",
-        "Cell & Biomaterial Engineering",
+        "Production Process Design",
+        "Eng. Application of Data Science",
+        "Eng for Quality and Reliability",
+        "FDA Regulation of Biomedical Devices",
         "Differential Equations",
-        "Aseptic Technique",
-        "GMP/GLP",
     ];
 </script>
 
