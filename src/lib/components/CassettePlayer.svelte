@@ -5,8 +5,44 @@
     let volume = $state(0.5); // Default volume 50%
     let audio: HTMLAudioElement;
 
-    function togglePlay() {
+    // Web Audio API context for iOS volume control
+    let ctx: AudioContext | null = null;
+    let source: MediaElementAudioSourceNode | null = null;
+    let gain: GainNode | null = null;
+
+    function initAudioGraph() {
+        if (ctx) return;
+
+        // Initialize AudioContext
+        const AudioContextClass =
+            window.AudioContext || (window as any).webkitAudioContext;
+        ctx = new AudioContextClass();
+
+        if (audio && ctx) {
+            source = ctx.createMediaElementSource(audio);
+            gain = ctx.createGain();
+
+            // Set initial volume
+            gain.gain.value = volume;
+
+            source.connect(gain);
+            gain.connect(ctx.destination);
+        }
+    }
+
+    async function togglePlay() {
         if (!audio) return;
+
+        // Ensure AudioContext is initialized on first user gesture
+        if (!ctx) {
+            initAudioGraph();
+        }
+
+        // Resume context if suspended (browser behavior)
+        if (ctx?.state === "suspended") {
+            await ctx.resume();
+        }
+
         if (isPlaying) {
             audio.pause();
         } else {
@@ -27,10 +63,24 @@
         audio.currentTime += seconds;
     }
 
-    function updateVolume(e: Event) {
+    async function updateVolume(e: Event) {
         const target = e.target as HTMLInputElement;
         volume = parseFloat(target.value);
-        if (audio) {
+
+        // Initialize graph if not ready (important for iOS)
+        if (!ctx) {
+            initAudioGraph();
+        }
+
+        // IMPORTANT: iOS requires this to happen after a user gesture
+        if (ctx?.state === "suspended") {
+            await ctx.resume();
+        }
+
+        if (gain) {
+            gain.gain.value = volume;
+        } else if (audio) {
+            // Fallback if Web Audio API fails for some reason
             audio.volume = volume;
         }
     }
@@ -38,16 +88,23 @@
     onMount(() => {
         audio = new Audio("/music/track_1.mp3");
         audio.loop = true;
+        // Don't set audio.volume directly if using Web Audio API for volume,
+        // but setting it as default doesn't hurt for fallback
         audio.volume = volume;
 
         // Handle external pauses (e.g. system controls)
         audio.addEventListener("pause", () => (isPlaying = false));
         audio.addEventListener("play", () => (isPlaying = true));
 
+        // Cleanup
         return () => {
             if (audio) {
                 audio.pause();
                 audio = null!;
+            }
+            if (ctx) {
+                ctx.close();
+                ctx = null;
             }
         };
     });
