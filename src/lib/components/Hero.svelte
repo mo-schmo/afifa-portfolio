@@ -1,6 +1,7 @@
 <script lang="ts">
     import profileImg from "$lib/assets/profile.png";
     import ResumeViewer from "./ResumeViewer.svelte";
+    import CassettePlayer from "./CassettePlayer.svelte";
 
     export let name = "Afifa Nusrat";
     export let title = "Biomedical Engineering Graduate & R&D Specialist";
@@ -15,10 +16,12 @@
     class="min-h-[80vh] flex flex-col items-center justify-center text-center p-8"
 >
     <!-- ... existing layout ... -->
-    <div class="relative mb-8">
+    <div
+        class="relative mb-8 flex flex-col items-center gap-8 w-full max-w-[90vw]"
+    >
         <!-- Profile Photo Frame -->
         <div
-            class="w-80 md:w-[450px] transform -rotate-1 hover:rotate-0 transition-transform duration-500 shadow-2xl border-8 border-white bg-white p-2"
+            class="w-full max-w-[320px] md:max-w-[450px] transform -rotate-1 hover:rotate-0 transition-transform duration-500 shadow-2xl border-8 border-white bg-white p-2"
         >
             <img
                 src={profileImg}
@@ -31,6 +34,13 @@
             >
                 The Journal
             </div>
+        </div>
+
+        <!-- Embedded Cassette Player -->
+        <div
+            class="transform rotate-2 hover:rotate-0 transition-transform duration-500 max-w-full"
+        >
+            <CassettePlayer />
         </div>
     </div>
 
