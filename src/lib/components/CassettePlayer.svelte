@@ -226,7 +226,7 @@
                         step="0.01"
                         value={volume}
                         oninput={updateVolume}
-                        class="relative w-full h-full opacity-0 cursor-pointer z-10"
+                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 touch-none"
                     />
                     <!-- Custom Thumb (Visual Only - positioned by JS in a real app, but here used native thumb mostly) -->
                     <!-- We'll stick to a styled native input for simplicity and robustness -->
